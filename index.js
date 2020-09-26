@@ -86,6 +86,17 @@ var parseMeta = function(url, options, body, header) {
 		}
 	});
 
+	var link = $('link'), headerLinkData = {}
+	Object.keys(link).forEach(function(key) {
+		var attribs = link[key].attribs;
+		if (attribs && attribs.rel) {
+			if(!headerLinkData[attribs.rel.toLowerCase()]) {
+				headerLinkData[attribs.rel.toLowerCase()] = []
+			}
+			headerLinkData[attribs.rel.toLowerCase()].push(attribs.href);
+		}
+	});
+
 	if (options.language) {
 		response.language = $("html").attr("lang") || $("html").attr("xml:lang") || header["Content-Language"] || header["content-language"];
 		if (!!!response.language) {
@@ -120,6 +131,9 @@ var parseMeta = function(url, options, body, header) {
 	}
 	if (options.meta) {
 		response.meta = metaData;
+	}
+	if (options.headerLinks) {
+		response.headerLinks = headerLinkData;
 	}
 	if (options.headers) {
 		response.headers = header;
@@ -156,6 +170,7 @@ Client.fetch = function(url, options, callback) {
 			image: true,
 			meta: true,
 			images: true,
+			headerLinks: false,
 			links: true,
 			headers: true,
 			language: true
