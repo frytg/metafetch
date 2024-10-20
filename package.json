@@ -25,7 +25,7 @@
     "langs": "^2.0.0",
     "lodash": "^4.17.21",
     "superagent": "^6.1.0",
-    "superagent-charset": "https://github.com/brahma-dev/superagent-charset",
+    "superagent-charset": "git@github.com:brahma-dev/superagent-charset.git",
     "uri-js": "^4.4.1"
   },
   "devDependencies": {
