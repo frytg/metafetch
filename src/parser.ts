@@ -59,6 +59,19 @@ export default function (url, options, body, header?) {
 			return linkhash.hasOwnProperty(item) ? false : (linkhash[item] = true);
 		}).get();
 	}
+	if (options.metaLinks) {
+		var link = $('link'), metaLinks = {}
+		Object.keys(link).forEach(function(key) {
+			var attribs = link[key].attribs;
+			if (attribs && attribs.rel) {
+				if(!metaLinks[attribs.rel.toLowerCase()]) {
+					metaLinks[attribs.rel.toLowerCase()] = []
+				}
+				metaLinks[attribs.rel.toLowerCase()].push(attribs.href);
+			}
+		});
+		response.metaLinks = metaLinks
+	}
 	var meta = $('meta'),
 		canonicalURL = $("link[rel=canonical]").attr('href'),
 		ampURL = $("link[rel=amphtml]").attr('href'),
